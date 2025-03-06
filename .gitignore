@@ -1,0 +1,42 @@
+# Build and binary files
+build/
+sdkconfig
+sdkconfig.old
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.elf
+*.bin
+*.map
+*.hex
+*.a
+*.o
+*.d
+*.ld
+*.log
+
+# IDF virtual enviroment
+.idf/
+venv/
+python_env_*/
+
+# Debug and config files
+.vscode/
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*.DS_Store
+
+# ESP-IDF Extensa Toolchain
+*.pyc
+__pycache__/
+*.pyo
+
+# Partition and flash files
+partition_table/
+flash_project_args.json
+
+components/**/CMakeLists.txt.user
