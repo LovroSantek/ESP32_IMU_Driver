@@ -5,7 +5,7 @@
 #include "esp_system.h"
 #include "esp_log.h"
 
-#define SAMPLE_FREQUENCY (10.f)
+#define SAMPLE_FREQUENCY (50.f)
 #define SAMPLE_PERIOD (1.f / SAMPLE_FREQUENCY)
 
 void app_main(void)
@@ -20,7 +20,8 @@ void app_main(void)
         float ay = IMU_read_accel(ACCEL_YOUT_H);
         float az = IMU_read_accel(ACCEL_ZOUT_H);
 
-        ESP_LOGI("Acceleration: ", "x = %.3f  y = %.3f  z = %.3f", ax, ay, az);
+        printf("%f, %f, %f\n", ax, ay, az);
+        //ESP_LOGI("Acceleration: ", "x = %.3f  y = %.3f  z = %.3f", ax, ay, az);
         //ESP_LOGI("Gyroscope: ", "x = %.3f  y = %.3f  z = %.3f", gx, gy, gz);
 
         vTaskDelay((int) (1000 * SAMPLE_PERIOD) / portTICK_PERIOD_MS);

@@ -49,7 +49,7 @@ IMU_status_t IMU_init()
         ESP_LOGI("SPI", "SPI setup successful");
     }
 
-    if (write_register(PWR_MGMT_REG_ADRESS, WAKE_UP_MASK) == IMU_SUCCESS)
+    if (write_register(PWR_MGMT_REG_ADDRESS, WAKE_UP_MASK) == IMU_SUCCESS)
     {
         ESP_LOGI("SPI: ", "Sensor is no longer in sleep mode");
         return IMU_INIT_SUCCESS;
@@ -60,9 +60,9 @@ IMU_status_t IMU_init()
     }
 }
 
-uint8_t read_register(uint8_t adress)
+uint8_t read_register(uint8_t address)
 {
-    uint8_t send_buf[2] = {SPI_READ_MASK | adress, 0x00};
+    uint8_t send_buf[2] = {SPI_READ_MASK | address, 0x00};
     uint8_t recv_buf[2] = {0};
 
     spi_transaction_t t;
@@ -129,9 +129,9 @@ IMU_status_t select_user_bank(uint8_t user_bank)
     }
 }
 
-float IMU_read_accel(uint8_t accel_out_adress)
+float IMU_read_accel(uint8_t accel_out_address)
 {
-    uint8_t tx_data_high[2] = {SPI_READ_MASK | accel_out_adress, 0x00};
+    uint8_t tx_data_high[2] = {SPI_READ_MASK | accel_out_address, 0x00};
     uint8_t rx_data_high[2] = {0};
     spi_transaction_t trans_high = {
         .length = 16,
@@ -140,7 +140,7 @@ float IMU_read_accel(uint8_t accel_out_adress)
     };
     spi_device_transmit(spi_handle, &trans_high);
 
-    uint8_t tx_data_low[2] = {SPI_READ_MASK | (accel_out_adress + 1), 0x00};
+    uint8_t tx_data_low[2] = {SPI_READ_MASK | (accel_out_address + 1), 0x00};
     uint8_t rx_data_low[2] = {0};
     spi_transaction_t trans_low = {
         .length = 16,
@@ -154,9 +154,9 @@ float IMU_read_accel(uint8_t accel_out_adress)
     return accel / ACCEL_SENSITIVITY;
 }
 
-float IMU_read_gyro(uint8_t gyro_out_adress)
+float IMU_read_gyro(uint8_t gyro_out_address)
 {
-    uint8_t tx_data_high[2] = {SPI_READ_MASK | gyro_out_adress, 0x00};
+    uint8_t tx_data_high[2] = {SPI_READ_MASK | gyro_out_address, 0x00};
     uint8_t rx_data_high[2] = {0};
     spi_transaction_t trans_high = {
         .length = 16,
@@ -165,7 +165,7 @@ float IMU_read_gyro(uint8_t gyro_out_adress)
     };
     spi_device_transmit(spi_handle, &trans_high);
 
-    uint8_t tx_data_low[2] = {SPI_READ_MASK | (gyro_out_adress + 1), 0x00};
+    uint8_t tx_data_low[2] = {SPI_READ_MASK | (gyro_out_address + 1), 0x00};
     uint8_t rx_data_low[2] = {0};
     spi_transaction_t trans_low = {
         .length = 16,

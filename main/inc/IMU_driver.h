@@ -1,5 +1,5 @@
-#ifndef _9DOF2_DRIVER_H
-#define _9DOF2_DRIVER_H
+#ifndef _IMU_DRIVER_H
+#define _IMU_DRIVER_H
 
 #include "driver/spi_master.h"
 
@@ -10,11 +10,11 @@
 #define PIN_NUM_CS 5
 
 #define MAX_TRANSFER_SIZE 512
-#define SPI_WRITE_MASK 0x7F
+#define SPI_WRITE_MASK 0X7F
 #define SPI_READ_MASK 0X80
  
 #define USER_BANK_REG_ADDRESS 0X7F
-#define PWR_MGMT_REG_ADRESS 0X06
+#define PWR_MGMT_REG_ADDRESS 0X06
 #define WAKE_UP_MASK 0X01
 #define SLEEP_MASK 0X41
 
@@ -58,14 +58,6 @@ IMU_status_t IMU_init();
  *
  * This function sends a read command to the specified register address
  * and retrieves the corresponding value from the sensor.
- *
- * @param address The address of the register to read.
- * @return uint8_t The value read from the register.
- */
-uint8_t read_register(uint8_t adress);
-
-/**
- * @brief Reads a register from the sensor via SPI.
  *
  * @param address The address of the register to read.
  * @return uint8_t The value read from the register.
