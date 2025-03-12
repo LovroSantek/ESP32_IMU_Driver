@@ -1,53 +1,69 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C6 | ESP32-H2 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ----- |
+# IMU Driver for ICM-20948
 
-# Hello World Example
+## Overview
+This project provides a driver for the ICM-20948 Inertial Measurement Unit (IMU) sensor. The driver enables SPI communication with the sensor and includes functions to initialize the IMU, read acceleration, and read gyroscopic data.
 
-Starts a FreeRTOS task to print "Hello World".
+## Features
+- **IMU Initialization**: Configures SPI communication and wakes up the sensor.
+- **Acceleration Data Reading**: Reads acceleration values from the sensor.
+- **Gyroscope Data Reading**: Reads angular velocity values from the sensor.
+- **SPI Communication**: Handles low-level SPI transactions to interact with the IMU.
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+## Hardware Requirements
+- ESP32 microcontroller
+- ICM-20948 IMU sensor
+- SPI interface with the following pin configuration:
+  - MISO: GPIO 19
+  - MOSI: GPIO 23
+  - SCLK: GPIO 18
+  - CS: GPIO 5
 
-## How to use example
+## Software Requirements
+- ESP-IDF framework
+- SPI driver library from ESP-IDF
 
-Follow detailed instructions provided specifically for this example.
+## Installation
+1. Clone or download the repository.
+2. Include the `imu_driver.h` and `imu_driver.c` files in your ESP-IDF project.
+3. Configure the SPI interface according to the provided pin definitions.
 
-Select the instructions depending on Espressif chip installed on your development board:
-
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
-
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
-
+## Usage
+### Initialization
+Before using the driver, initialize the IMU with:
+```c
+IMU_status_t status = IMU_init();
+if (status != IMU_INIT_SUCCESS) {
+    printf("IMU initialization failed!\n");
+}
 ```
-├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
-├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+
+### Reading Accelerometer Data
+To read acceleration values from a specific axis:
+```c
+float accel_x = IMU_read_accel(ACCEL_XOUT_H);
+float accel_y = IMU_read_accel(ACCEL_YOUT_H);
+float accel_z = IMU_read_accel(ACCEL_ZOUT_H);
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+### Reading Gyroscope Data
+To read angular velocity values from a specific axis:
+```c
+float gyro_x = IMU_read_gyro(GYRO_XOUT_H);
+float gyro_y = IMU_read_gyro(GYRO_YOUT_H);
+float gyro_z = IMU_read_gyro(GYRO_ZOUT_H);
+```
 
-## Troubleshooting
+## API Reference
+### `IMU_status_t IMU_init()`
+Initializes the IMU sensor and SPI communication.
 
-* Program upload failure
+### `float IMU_read_accel(uint8_t accel_out_address)`
+Reads and returns the acceleration value (g units) from the specified register.
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+### `float IMU_read_gyro(uint8_t gyro_out_address)`
+Reads and returns the angular velocity (degrees per second) from the specified register.
 
-## Technical support and feedback
 
-Please use the following feedback channels:
+## Author
+Lovro Šantek, 2025
 
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
-
-We will get back to you as soon as possible.
