@@ -65,5 +65,5 @@ Reads and returns the angular velocity (degrees per second) from the specified r
 
 
 ## Author
-Lovro Šantek, 2025
+Lovro Šantek, March, 2025.
 
