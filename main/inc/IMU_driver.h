@@ -2,6 +2,8 @@
 #define _IMU_DRIVER_H
 
 #include "driver/spi_master.h"
+#include <string.h>
+#include "esp_log.h"
 
 // Pin definitions for SPI
 #define PIN_NUM_MISO 19

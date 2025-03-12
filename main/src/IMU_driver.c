@@ -1,6 +1,3 @@
-#include <string.h>
-#include "esp_log.h"
-
 #include "IMU_driver.h"
 
 spi_device_handle_t spi_handle;
